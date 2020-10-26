@@ -73,7 +73,7 @@ app.post('/api/newproduct', uploadEngine, async (req, res) => {
     try {
         console.log(productData)
         productData.save()
-        res.send({msg: 'Data saved'})
+        res.redirect('/maintenance')
     }
     catch(err) {
         res.send(err)

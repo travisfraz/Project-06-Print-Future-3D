@@ -6,6 +6,12 @@ const Products = () => {
 
     const [data, setData] = useState([])
 
+    
+    useEffect(() => {
+        fetchData()
+    }, [])
+
+
     async function fetchData() {
         try {
             const response = await fetch('/api/load', {mode: 'cors'})
@@ -16,9 +22,35 @@ const Products = () => {
         }
     }
 
-    useEffect(() => {
-        fetchData()
-    }, [])
+
+//function to format image binary data for viewing
+function arrayBufferToBase64(buffer) {
+    var binary = '';
+    var bytes = [].slice.call(new Uint8Array(buffer));
+    bytes.forEach((b) => binary += String.fromCharCode(b));
+    return window.btoa(binary);
+}
+
+//Do not delete!!! Need this in the short term to format binary data.
+    //const images = msg.map(entry => {
+    //    const base64Flag = `data:${entry.main.contentType};base64,`
+    //    const imageStr = arrayBufferToBase64(entry.main.data.data)
+//
+    //    const accessoryImages = entry.accessory.map(element => {
+    //        const base64FlagAcc = `data:${element.contentType};base64,`
+    //        const imageStrAcc = arrayBufferToBase64(element.data.data)
+    //        return (
+    //            <img style={{width: 80}} src={base64FlagAcc + imageStrAcc} />
+    //        )
+    //    })
+    //    return (
+    //        <div>
+    //            <img style={{width: 240}} src={base64Flag + imageStr} />
+    //            {accessoryImages}
+    //        </div>
+    //        
+    //    )
+    //})
 
     const prodNames = data.map((item) => {
         return (
@@ -27,6 +59,10 @@ const Products = () => {
     })
 
     const prodTiles = data.map((item) => {
+
+        const base64Flag = `data:${item.mainImg.contentType};base64,`
+        const imageStr = arrayBufferToBase64(item.mainImg.data.data)
+
         return (
             <NavLink 
                 key={item.key} 
@@ -37,7 +73,7 @@ const Products = () => {
             >
                 <div className="img-container">
                     <img 
-                        src={require(`../images/${item.img}.jpg`)}
+                        src={base64Flag + imageStr}
                         alt=""
                     />
                     <div className="p-info">{item.name}</div>

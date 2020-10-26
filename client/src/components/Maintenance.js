@@ -5,46 +5,6 @@ export default function Maintenance() {
     const [name, setName] = useState('')
     const [desc, setDesc] = useState('')
     const [price, setPrice] = useState('')
-    const [img, setImg] = useState(null)
-
-    //const submitProduct = (event) => {
-    //    event.preventDefault()
-    //    const determiner = window.confirm(`Would you like to submit these changes?
-    //    Product name: ${name}
-    //    Product description: ${desc}
-    //    Price: ${price}`)
-//
-    //    if (determiner) {
-    //        const bodyData = {
-    //            name: name,
-    //            price: price,
-    //            desc: desc
-    //        }
-//
-//
-    //    postNewImg(bodyData)
-    //    }
-    //}
-
-    //async function postNewImg(bodyData) {
-    //    const format = {
-    //        method: 'POST',
-    //        headers: {
-    //            'Content-Type': 'multipart/form-data'
-    //        },
-    //        body: bodyData,
-    //        files: {
-    //            main: img
-    //        }
-    //    }
-    //    try {
-    //        const response = await fetch('/api/newimg', format)
-    //        const responseJson = await response.json()
-    //        console.log(responseJson)
-    //    } catch (err) {
-    //        console.log(err)
-    //    }
-    //}
 
     return (
         <div>Maintenance Page
@@ -77,17 +37,56 @@ export default function Maintenance() {
                     placeholder='Price'
                 />
                 <br />
+                <label>Main Photo</label>
                 <input 
                     type='file' 
                     name='main'
-                    onChange={e => setImg(e.target.value)}
+                    placeholder='Main'
                 />
                 <br />
+                <label>Acc1 Photo</label>
                 <input 
                     type='file' 
                     name='acc'
                 />
                 <br />
+                <label>Acc2 Photo</label>
+                <input 
+                    type='file' 
+                    name='acc'
+                />
+                <br />
+                <label>Acc3 Photo</label>
+                <input 
+                    type='file' 
+                    name='acc'
+                />
+                <br />
+                <label>Acc4 Photo</label>
+                <input 
+                    type='file' 
+                    name='acc'
+                />
+                <br />
+                <label>Acc5 Photo</label>
+                <input 
+                    type='file' 
+                    name='acc'
+                />
+                <br />
+                <label>Acc6 Photo</label>
+                <input 
+                    type='file' 
+                    name='acc'
+                />
+                <br />
+                <label>Acc7 Photo</label>
+                <input 
+                    type='file' 
+                    name='acc'
+                />
+                <br />
+                <label>Acc8 Photo</label>
                 <input 
                     type='file' 
                     name='acc'
