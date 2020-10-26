@@ -7,71 +7,59 @@ export default function Maintenance() {
     const [price, setPrice] = useState('')
     const [img, setImg] = useState(null)
 
-    const submitProduct = (event) => {
-        event.preventDefault()
-        const determiner = window.confirm(`Would you like to submit these changes?
-        Product name: ${name}
-        Product description: ${desc}
-        Price: ${price}`)
+    //const submitProduct = (event) => {
+    //    event.preventDefault()
+    //    const determiner = window.confirm(`Would you like to submit these changes?
+    //    Product name: ${name}
+    //    Product description: ${desc}
+    //    Price: ${price}`)
+//
+    //    if (determiner) {
+    //        const bodyData = {
+    //            name: name,
+    //            price: price,
+    //            desc: desc
+    //        }
+//
+//
+    //    postNewImg(bodyData)
+    //    }
+    //}
 
-        if (determiner) {
-            const productData = {
-                name: name,
-                price: price,
-                desc: desc
-            }
-        //postNew(productData)    
-        postNewImg()
-        }
-    }
-
-    async function postNew(productData) {
-        const format = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(productData)
-        }
-        try {
-            const response = await fetch('/api/new', format)
-            const responseJson = await response.json()
-            console.log(responseJson)
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    async function postNewImg() {
-        const format = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            },
-            body: img
-        }
-        try {
-            const response = await fetch('/api/newimg', format)
-            const responseJson = await response.json()
-            console.log(responseJson)
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    /*useEffect(() => {
-        console.log(desc)
-    }, [desc])*/
+    //async function postNewImg(bodyData) {
+    //    const format = {
+    //        method: 'POST',
+    //        headers: {
+    //            'Content-Type': 'multipart/form-data'
+    //        },
+    //        body: bodyData,
+    //        files: {
+    //            main: img
+    //        }
+    //    }
+    //    try {
+    //        const response = await fetch('/api/newimg', format)
+    //        const responseJson = await response.json()
+    //        console.log(responseJson)
+    //    } catch (err) {
+    //        console.log(err)
+    //    }
+    //}
 
     return (
         <div>Maintenance Page
-            <form onSubmit={submitProduct}
+            <form 
+                method='Post'
+                action='/api/newproduct'
+                encType="multipart/form-data"
+            >
+                <input 
                     type="text"
-                    name="name"
+                    name='name'
                     value={name}
                     onChange={e => setName(e.target.value)}
                     placeholder='Product Name'
-                >
+                />
                 <br />
                 <textarea
                     type='textarea'
@@ -91,8 +79,18 @@ export default function Maintenance() {
                 <br />
                 <input 
                     type='file' 
-                    name='img'
+                    name='main'
                     onChange={e => setImg(e.target.value)}
+                />
+                <br />
+                <input 
+                    type='file' 
+                    name='acc'
+                />
+                <br />
+                <input 
+                    type='file' 
+                    name='acc'
                 />
                 <br/>
                 <button>Submit</button>

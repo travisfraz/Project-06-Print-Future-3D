@@ -8,12 +8,10 @@ const mongoose = require('mongoose')
 const Products = require('./product_model')
 const bodyParser = require('body-parser')
 const path = require('path')
-const crypto = require('crypto')
 const multer = require('multer')
-const GridFsStorage = require('multer-gridfs-storage')
-const Grid = require('gridfs-stream')
+const upload = multer({ dest: 'uploads/' }, {limits: {fieldSize: 5000000}})
 const methodOverride = require('method-override')
-const { resolve } = require('path')
+const fs = require('fs')
 
 const app = express()
 
@@ -33,25 +31,11 @@ db.on('error', error => console.log(error))
 db.on('open', () => console.log('MongoDB connected'))
 
 // Create storage engine
-const storage = new GridFsStorage({
-    url: process.env.DATABASE_URL,
-    file: (req, file) => {
-        return new Promise((resolve, reject) => {
-            crypto.randomBytes(16, (err, buf) => {
-                if (err) {
-                    return reject(err)
-                }
-                const filename = buf.toString('hex') + path.extname(file.originalname)
-                const fileInfo = {
-                    filename: filename,
-                    bucketName: 'uploads'
-                }
-                resolve(fileInfo)
-            })
-        })
-    }
-})
-const upload = multer({ storage })
+
+const uploadEngine = upload.fields([
+    {name: 'main', maxCount: 1},
+    {name: 'acc', maxCount: 8}
+])
 
 
 
@@ -68,32 +52,33 @@ app.get('/api/load', async (req, res) =>{
     }
 })
 
-app.post('/api/new', cors(), async (req, res) => {
-    console.log(req.body)
-    const productData = new Products({
-        name: req.body.name,
-        desc: req.body.desc,
-        price: req.body.price
-    })
-    try {
-        const newProductEntry = await productData.save()
-        res.send( {response: 'success'} )
-    } catch(err) {
-        res.send( {response: 'No Good'} )
-        console.log(err)
-    }
-})
+app.post('/api/newproduct', uploadEngine, async (req, res) => {
 
-app.post('/api/newimg', upload.single('file'), async (req, res) => {
-    console.log(req.body)
+    const productData = new Products()
+
+    for (i=0; i < req.files.acc.length; i++) {
+        const obj = {
+            data: fs.readFileSync(req.files['acc'][i].path),
+            contentType: req.files['acc'][i].mimetype
+        }
+        productData.accImgs.push(obj)
+    }
+
+    productData.name = req.body.name
+    productData.desc = req.body.desc
+    productData.price = req.body.price
+    productData.mainImg.data = fs.readFileSync(req.files['main'][0].path)
+    productData.mainImg.contentType = req.files['main'][0].mimetype
+
     try {
-        res.json( {msg: 'Worked bitch'} )
+        console.log(productData)
+        productData.save()
+        res.send({msg: 'Data saved'})
     }
     catch(err) {
         res.send(err)
     }
 })
-
 
 const port = 5000
 app.listen(process.env.PORT || port, () => console.log('Server Running'))

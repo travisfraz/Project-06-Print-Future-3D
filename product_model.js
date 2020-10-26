@@ -13,11 +13,14 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    //img: {
-    //    type: Buffer,
-    //    contentType: String,
-    //    required: true
-    //}
+    mainImg: {
+        data: Buffer,
+        contentType: String
+    },
+    accImgs: [{
+        data: Buffer,
+        contentType: String,
+    }]
 })
 
 module.exports = mongoose.model('Products', productSchema)
