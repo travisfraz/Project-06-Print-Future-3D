@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Footer from './subcomponents/Footer'
 import { NavLink } from 'react-router-dom'
+import { arrayBufferToBase64 } from '../modules/arrayBufferToBase64'
 
 const Products = () => {
 
@@ -21,15 +22,6 @@ const Products = () => {
             console.log(`Error occured: ${err}`)
         }
     }
-
-
-//function to format image binary data for viewing
-function arrayBufferToBase64(buffer) {
-    var binary = '';
-    var bytes = [].slice.call(new Uint8Array(buffer));
-    bytes.forEach((b) => binary += String.fromCharCode(b));
-    return window.btoa(binary);
-}
 
 //Do not delete!!! Need this in the short term to format binary data.
     //const images = msg.map(entry => {
@@ -65,9 +57,9 @@ function arrayBufferToBase64(buffer) {
 
         return (
             <NavLink 
-                key={item.key} 
+                key={item._id} 
                 to={{
-                    pathname: `/products/${item.key}`,
+                    pathname: `/products/${item._id}`,
                     state: item
                 }}
             >
