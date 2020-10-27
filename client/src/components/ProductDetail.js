@@ -7,13 +7,13 @@ function ProductDetail(props) {
 
     const mainBase64Flag = `data:${prodState.mainImg.contentType};base64,`
     const mainImageStr = arrayBufferToBase64(prodState.mainImg.data.data)
-    const mainImg = <img src={mainBase64Flag + mainImageStr} />
+    const mainImg = <img src={mainBase64Flag + mainImageStr} alt='' />
 
     const accessoryImages = prodState.accImgs.map(element => {
         const base64FlagAcc = `data:${element.contentType};base64,`
         const imageStrAcc = arrayBufferToBase64(element.data.data)
         return (
-            <img style={{width: 240}} src={base64FlagAcc + imageStrAcc} />
+            <img style={{width: 240}} src={base64FlagAcc + imageStrAcc} alt='' />
         )
     })
 

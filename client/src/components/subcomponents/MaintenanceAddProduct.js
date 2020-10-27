@@ -4,6 +4,20 @@ export default function Maintenance_AddProduct() {
     const [name, setName] = useState('')
     const [desc, setDesc] = useState('')
     const [price, setPrice] = useState('')
+    const [addAccPhoto, setAddAccPhoto] = useState([])
+
+    function addAcc() {
+        const ele = document.getElementById('acc-pics')
+        const numEle = ele.getElementsByTagName('input').length
+        if (numEle < 8) {
+            //const label = document.createElement('label')
+            //const input = <input type='file' name='acc' />
+            const jsx = <div key={numEle}><label>Acc{numEle+1} Photo</label><input type='file' name='acc' /></div>
+            setAddAccPhoto(prevState => prevState.concat(jsx))
+        } else {
+            alert('Can not add more than 8 accessory pictures.')
+        }
+    }
 
     return (
         <div className='left'>Add Product
@@ -43,54 +57,17 @@ export default function Maintenance_AddProduct() {
                         placeholder='Main'
                     />
                     <br />
-                    <label>Acc1 Photo</label>
-                    <input 
-                        type='file' 
-                        name='acc'
-                    />
+                    <div id='acc-pics'>
+                        <label>Acc1 Photo</label>
+                        <input 
+                            type='file' 
+                            name='acc'
+                        />
+                        {addAccPhoto}
+                    </div>
                     <br />
-                    <label>Acc2 Photo</label>
-                    <input 
-                        type='file' 
-                        name='acc'
-                    />
+                    <button type='button' onClick={addAcc}>Add Another Accessory Picture?</button>
                     <br />
-                    <label>Acc3 Photo</label>
-                    <input 
-                        type='file' 
-                        name='acc'
-                    />
-                    <br />
-                    <label>Acc4 Photo</label>
-                    <input 
-                        type='file' 
-                        name='acc'
-                    />
-                    <br />
-                    <label>Acc5 Photo</label>
-                    <input 
-                        type='file' 
-                        name='acc'
-                    />
-                    <br />
-                    <label>Acc6 Photo</label>
-                    <input 
-                        type='file' 
-                        name='acc'
-                    />
-                    <br />
-                    <label>Acc7 Photo</label>
-                    <input 
-                        type='file' 
-                        name='acc'
-                    />
-                    <br />
-                    <label>Acc8 Photo</label>
-                    <input 
-                        type='file' 
-                        name='acc'
-                    />
-                    <br/>
                     <button>Submit</button>
                 </form>
             </div>

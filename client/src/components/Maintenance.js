@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import Maintenance_AddProduct from './subcomponents/Maintenance_AddProduct'
+import React from 'react'
+import MaintenanceAddProduct from './subcomponents/MaintenanceAddProduct'
 
 export default function Maintenance() {
 
@@ -9,7 +9,7 @@ export default function Maintenance() {
         <div className='parent'>
             <h1>Maintenace Page</h1>
             <br />
-            <Maintenance_AddProduct />
+            <MaintenanceAddProduct />
             <div className='right'> Modify Product
                 <form>
                     <input 
