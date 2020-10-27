@@ -21,7 +21,9 @@ function ProductDetail(props) {
         <div>
             <h3 className='p-title'>{prodState.name}</h3>
             <hr/>
-            {mainImg}
+            <div className='pd-img-container'>
+                {mainImg}
+            </div>
             <article className='p-text-section'>
                 {prodState.desc}
             </article>

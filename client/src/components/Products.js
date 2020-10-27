@@ -23,27 +23,6 @@ const Products = () => {
         }
     }
 
-//Do not delete!!! Need this in the short term to format binary data.
-    //const images = msg.map(entry => {
-    //    const base64Flag = `data:${entry.main.contentType};base64,`
-    //    const imageStr = arrayBufferToBase64(entry.main.data.data)
-//
-    //    const accessoryImages = entry.accessory.map(element => {
-    //        const base64FlagAcc = `data:${element.contentType};base64,`
-    //        const imageStrAcc = arrayBufferToBase64(element.data.data)
-    //        return (
-    //            <img style={{width: 80}} src={base64FlagAcc + imageStrAcc} />
-    //        )
-    //    })
-    //    return (
-    //        <div>
-    //            <img style={{width: 240}} src={base64Flag + imageStr} />
-    //            {accessoryImages}
-    //        </div>
-    //        
-    //    )
-    //})
-
     const prodNames = data.map((item) => {
         return (
             <span key={item.key}className='p-names'>{item.name}</span>
@@ -51,12 +30,11 @@ const Products = () => {
     })
 
     const prodTiles = data.map((item) => {
-
         const base64Flag = `data:${item.mainImg.contentType};base64,`
         const imageStr = arrayBufferToBase64(item.mainImg.data.data)
-
         return (
             <NavLink 
+                className="p-info"
                 key={item._id} 
                 to={{
                     pathname: `/products/${item._id}`,
@@ -68,8 +46,8 @@ const Products = () => {
                         src={base64Flag + imageStr}
                         alt=""
                     />
-                    <div className="p-info">{item.name}</div>
-                    <div className="p-info">${item.price}</div>
+                    <div>{item.name}</div>
+                    <div>${item.price}</div>
                 </div>
             </NavLink>
         )

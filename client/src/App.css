@@ -102,6 +102,10 @@ h2 {
     margin: 50px 0 0 0;
 }
 
+    .products img:hover {
+        opacity: 0.6;
+    }
+
 img {
     width: 320px;
     margin: 40px 10px 0 10px;
@@ -110,9 +114,6 @@ img {
     background-color: black;
 } 
 
-img:hover {
-    opacity: 0.6;
-}
 .img-container {
     position: relative;
     width: 340px;
@@ -158,6 +159,8 @@ hr {
 .p-info {
     padding: 0 10px 0 10px;
     text-align: center;
+    color: black;
+    text-decoration: none;
 }
 
 
@@ -168,7 +171,10 @@ hr {
 /*This section is for the ProductDetail page*/
 .pd-img-container {
     display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-evenly;
+    margin: 50px 0 0 0;
 }
 
 
