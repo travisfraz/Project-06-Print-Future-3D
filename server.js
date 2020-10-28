@@ -19,7 +19,7 @@ const app = express()
 app.use(cors())
 app.use(methodOverride('_method'))
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded( { limit: '1mb', extended: false } ))
+app.use(bodyParser.urlencoded( { limit: '1mb', extended: true } ))
 
 // Creates connection to database
 mongoose.connect(process.env.DATABASE_URL, {
@@ -51,6 +51,21 @@ app.get('/api/load', async (req, res) =>{
         console.log(err)
     }
 })
+
+
+app.get('/api/search', async (req, res) => {
+    try {
+        const data = await Products.find({ name: { $regex: req.query.criteria, $options: 'i' }})
+        res.send(data)
+        //res.redirect('http://localhost:3000/maintenance')
+    } catch(err) {
+        console.log(`Error! ${err}`)
+        res.redirect('http://localhost:3000//maintenance')
+    }
+})
+
+
+
 
 app.post('/api/newproduct', uploadEngine, async (req, res) => {
 

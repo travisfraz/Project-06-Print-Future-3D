@@ -1,5 +1,6 @@
 import React from 'react'
 import MaintenanceAddProduct from './subcomponents/MaintenanceAddProduct'
+import MaintenanceModifyProduct from './subcomponents/MaintenanceModifyProduct'
 
 export default function Maintenance() {
 
@@ -10,16 +11,7 @@ export default function Maintenance() {
             <h1>Maintenace Page</h1>
             <br />
             <MaintenanceAddProduct />
-            <div className='right'> Modify Product
-                <form>
-                    <input 
-                        type='text'
-                    />
-                    <input 
-                        type='submit'
-                    />
-                </form>
-            </div>
+            <MaintenanceModifyProduct />
         </div>
         
     )
