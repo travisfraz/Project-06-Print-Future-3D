@@ -30,8 +30,7 @@ const Products = () => {
     })
 
     const prodTiles = data.map((item) => {
-        const base64Flag = `data:${item.mainImg.contentType};base64,`
-        const imageStr = arrayBufferToBase64(item.mainImg.data.data)
+        const imageStr = arrayBufferToBase64(item.mainImg)
         return (
             <NavLink 
                 className="p-info"
@@ -43,7 +42,7 @@ const Products = () => {
             >
                 <div className="img-container">
                     <img 
-                        src={base64Flag + imageStr}
+                        src={imageStr}
                         alt=""
                     />
                     <div>{item.name}</div>

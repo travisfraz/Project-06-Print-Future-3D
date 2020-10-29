@@ -1,9 +1,11 @@
 //function to format image binary data for viewing
-function arrayBufferToBase64(buffer) {
+function arrayBufferToBase64(img) {
+    const base64Flag = `data:${img.contentType};base64,`
     var binary = '';
-    var bytes = [].slice.call(new Uint8Array(buffer));
+    var bytes = [].slice.call(new Uint8Array(img.data.data));
     bytes.forEach((b) => binary += String.fromCharCode(b));
-    return window.btoa(binary);
+    const imageStr = window.btoa(binary);
+    return base64Flag + imageStr
 }
 
 module.exports = { arrayBufferToBase64 }
