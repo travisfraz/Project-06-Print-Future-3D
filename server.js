@@ -24,7 +24,8 @@ app.use(bodyParser.urlencoded( { limit: '1mb', extended: true } ))
 // Creates connection to database
 mongoose.connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
 })
 const db = mongoose.connection
 db.on('error', error => console.log(error))
@@ -65,8 +66,6 @@ app.get('/api/search', async (req, res) => {
 })
 
 
-
-
 app.post('/api/newproduct', uploadEngine, async (req, res) => {
 
     const productData = new Products()
@@ -86,12 +85,22 @@ app.post('/api/newproduct', uploadEngine, async (req, res) => {
     productData.mainImg.contentType = req.files['main'][0].mimetype
 
     try {
-        console.log(productData)
         productData.save()
         res.redirect('/maintenance')
     }
     catch(err) {
         res.send(err)
+    }
+})
+
+app.delete('/api/delete', async (req, res) => {
+    prodId = req.body.prodId
+    try {
+        const dbResponse = await Products.findByIdAndRemove(prodId)
+        console.log(dbResponse)
+        res.json(dbResponse)
+    } catch(err) {
+        res.send({'status': `Error! ${err}`})
     }
 })
 
