@@ -18,6 +18,7 @@ const productSchema = new mongoose.Schema({
         contentType: String
     },
     accImgs: [{
+        _id: false,
         data: Buffer,
         contentType: String,
     }]

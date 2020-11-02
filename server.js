@@ -69,7 +69,7 @@ app.get('/api/search', async (req, res) => {
 app.post('/api/newproduct', uploadEngine, async (req, res) => {
 
     const productData = new Products()
-
+    console.log(req.files)
     for (i=0; i < req.files.acc.length; i++) {
         const obj = {
             data: fs.readFileSync(req.files['acc'][i].path),
@@ -101,6 +101,57 @@ app.delete('/api/delete', async (req, res) => {
         res.json(dbResponse)
     } catch(err) {
         res.send({'status': `Error! ${err}`})
+    }
+})
+
+app.put('/api/update/product_text', async (req, res) => {
+    console.log(req.body)
+    const query = { _id: req.body._id }
+    const updateObj = {}
+    updateObj[req.body.updateKey] = req.body.updateValue
+    try {
+        const dbResponse = await Products.updateOne(query, updateObj)
+        res.json({status: 'Great success'})
+    } catch(err) {
+        res.json({status: `Error! ${err}`})
+    }
+})
+
+app.put('/api/update/image', upload.single('image'), async (req, res) => {
+    const query = { _id: req.body._id }
+    //let updateObj = {}
+    let updateData = {}
+    let updateContentType = {}
+    console.log(req.file)
+    console.log(req.body)
+    if (req.body.name === 'main') {
+        updateData = { 'mainImg.data': fs.readFileSync(req.file.path) }
+        updateContentType = { 'mainImg.contentType': req.file.mimetype }
+        //updateObj = {
+        //    mainImg: {
+        //        data: fs.readFileSync(req.file.path),
+        //        contentType: req.file.mimetype
+        //    }
+        //}
+    } else if (req.body.name === 'acc') {
+        const dataString = `accImgs.${req.body.position}.data`
+        const contentTypeString = `accImgs.${req.body.position}.contentType`
+        console.log(dataString, contentTypeString)
+        updateData[dataString] = fs.readFileSync(req.file.path)
+        updateContentType[contentTypeString] = req.file.mimetype
+        //updateObj = {
+        //    
+        //}
+        //updateObj.accImgs[req.file.position].data = fs.readFileSync(req.file.path)
+        //updateObj.accImgs[req.file.position].contentType = req.file.mimetype
+        //console.log(updateObj.accImgs)
+    }
+    try {
+        const dbResponse1 = await Products.updateOne(query, updateData)
+        const dbResponse2 = await Products.updateOne(query, updateContentType)
+        res.json({dbResponse1: dbResponse1, dbResponse2: dbResponse2})
+    } catch(err) {
+        res.json({status: `Error! ${err}`})
     }
 })
 

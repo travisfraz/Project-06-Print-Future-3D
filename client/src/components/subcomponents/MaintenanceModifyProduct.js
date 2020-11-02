@@ -23,7 +23,6 @@ export default function MaintenanceModifyProduct() {
     //via props. Based on the size of the array passed determines what data should be shown.
     function ModifySection(props) {
         const productData = props.data
-        console.log(props.data, 'ModifySection')
         if (productData.length === 0) {
             return <div>No products found</div>
         } else if (productData.length > 1) {
@@ -68,38 +67,118 @@ export default function MaintenanceModifyProduct() {
     const popModifyProd = (prodDataArray) => {
         const prodData = prodDataArray[0]
         const mainImgString = arrayBufferToBase64(prodData.mainImg)
-        const accImages = prodData.accImgs.map(ele => {
+        const accImages = prodData.accImgs.map((ele, index) => {
             let accImgString = arrayBufferToBase64(ele)
             return (
-                <div>
+                <div key={index}>
+                    <label>Accessory Image {index+1}: </label>
                     <img src={accImgString} alt='' />
-                    <input type='file' />
+                    <input
+                        type='file'
+                        name='acc'
+                        id={index}
+                    />
+                    <button onClick={updateProperty}>Update</button>
+                    <br />
                 </div>
             )
         })
         return (
-            <form key={prodData._id} id={prodData._id}>
+            <form key={prodData._id} id={prodData._id} encType='multipart/form-data' method='post'>
                 <div>
+                    <label>Product Name: </label>
                     <label>{prodData.name}</label>
-                    <input type='text' />
+                    <input 
+                        type='text' 
+                        name='name'
+                    />
+                    <button onClick={updateProperty}>Update</button>
                 </div>
+                <br />
                 <div>
+                    <label>Product Description: </label>
                     <label>{prodData.desc}</label>
-                    <input type='textarea' />
+                    <input
+                        type='textarea'
+                        name='desc'
+                    />
+                    <button onClick={updateProperty}>Update</button>
                 </div>
+                <br />
                 <div>
+                    <label>Product Price: </label>
                     <label>{prodData.price}</label>
-                    <input type='text' />
+                    <input 
+                        type='text'
+                        name='price'
+                    />
+                    <button onClick={updateProperty}>Update</button>
                 </div>
+                <br />
                 <div>
+                    <label>Main Image: </label>
                     <img src={mainImgString} alt='' />
-                    <input type='file' />
+                    <input 
+                        type='file'
+                        name='main'
+                        id='0'
+                    />
+                    <button onClick={updateProperty}>Update</button>
                 </div>
+                <br />
                 {accImages}
-                <button type='submit'>Submit Changes</button>
+                {/*<button onClick={(e) => updateProd(e)}>Submit Changes</button>*/}
                 <button onClick={(e) => deleteProd(e)}>Delete Product</button>
             </form>
         )
+    }
+
+    //Sends call to server to update the selected product property
+    async function updateProperty(e) {
+        e.preventDefault()
+        const inputEle = e.target.closest('div').querySelector('input')
+        const inputType = inputEle.type
+        const docId = e.target.closest('form').id
+        if (inputType === 'text') {
+            const propertyName = inputEle.name
+            const propertyValue = inputEle.value
+            const bodyObj = {
+                _id: docId,
+                updateKey: propertyName,
+                updateValue: propertyValue
+            }
+
+            const fetchInit = {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(bodyObj)
+            }
+            try {
+                const response = await fetch('http://localhost:5000/api/update/product_text', fetchInit)
+                const resJSON = await response.json()
+                console.log(resJSON)
+            } catch(err) {
+                console.log(`Text update Error! ${err}`)
+            }
+
+        } else if (inputType === 'file') {
+            const formData = new FormData()
+
+            formData.append('_id', docId)
+            formData.append('image', inputEle.files[0])
+            formData.append('position', inputEle.id)
+            formData.append('name', inputEle.name)
+            const fetchInit = {
+                method: 'PUT',
+                body: formData
+            }
+
+            const response = await fetch('http://localhost:5000/api/update/image', fetchInit)
+            const resJSON = await response.json()
+            console.log(resJSON)
+        }
     }
 
     //Sends call to server to delete the selected product
