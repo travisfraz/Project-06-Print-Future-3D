@@ -5,11 +5,16 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    price: {
-        type: Number,
+    size: [{
+        _id: false,
+        sizeName: String,
+        price: Number,
+    }],
+    desc: {
+        type: String,
         required: true
     },
-    desc: {
+    category: {
         type: String,
         required: true
     },

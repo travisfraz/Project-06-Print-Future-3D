@@ -3,8 +3,8 @@ import React, { useState } from 'react'
 export default function Maintenance_AddProduct() {
     const [name, setName] = useState('')
     const [desc, setDesc] = useState('')
-    const [price, setPrice] = useState('')
     const [addAccPhoto, setAddAccPhoto] = useState([])
+    const [addSizeCat, setAddSizeCat] = useState([])
 
     function addAcc() {
         const ele = document.getElementById('acc-pics')
@@ -17,6 +17,24 @@ export default function Maintenance_AddProduct() {
         } else {
             alert('Can not add more than 8 accessory pictures.')
         }
+    }
+
+    function addSize() {
+        const ele = document.getElementById('size')
+        const numEle = ele.getElementsByTagName('input').length/2 + 1
+        const jsx = <div key={numEle}>
+                <input
+                    type='text'
+                    name='size'
+                    placeholder='Size'
+                />
+                <input
+                    type="number"
+                    name='price'
+                    placeholder='Price'
+                />
+            </div>
+        setAddSizeCat(prevState => prevState.concat(jsx))
     }
 
     return (
@@ -43,12 +61,26 @@ export default function Maintenance_AddProduct() {
                     ></textarea>
                     <br />
                     <input
-                        type="number"
-                        name='price'
-                        value={price}
-                        onChange={e => setPrice(e.target.value)}
-                        placeholder='Price'
+                        type='text'
+                        name='category'
+                        placeholder='Category'
                     />
+                    <br/>
+                    <div id='size'>
+                        <input
+                            type='text'
+                            name='size'
+                            placeholder='Size'
+                        />
+                        <input
+                            type="number"
+                            name='price'
+                            placeholder='Price'
+                        />
+                        {addSizeCat}
+                        <button type='button' onClick={addSize}>Add Another Size?</button>
+                    </div>
+                    
                     <br />
                     <label>Main Photo</label>
                     <input 

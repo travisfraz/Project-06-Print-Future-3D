@@ -66,6 +66,22 @@ export default function MaintenanceModifyProduct() {
     //Populates all the fields a product has so they can be reviewed and then modified
     const popModifyProd = (prodDataArray) => {
         const prodData = prodDataArray[0]
+        const prodSizes = prodData.size.map((ele, index) => {
+            return (
+                <div key={index}>
+                    <div>
+                        <label>Size: {ele.sizeName}</label>
+                        <input type='text' name='sizeName' id={index}></input>
+                        <button onClick={updateProperty}>Update</button>
+                    </div>
+                    <div>
+                        <label>Price: {ele.price}</label>
+                        <input type='number' name='price' id={index}></input>
+                        <button onClick={updateProperty}>Update</button>
+                    </div>
+                </div>
+            )
+        })
         const mainImgString = arrayBufferToBase64(prodData.mainImg)
         const accImages = prodData.accImgs.map((ele, index) => {
             let accImgString = arrayBufferToBase64(ele)
@@ -83,10 +99,11 @@ export default function MaintenanceModifyProduct() {
                 </div>
             )
         })
+
         return (
             <form key={prodData._id} id={prodData._id} encType='multipart/form-data' method='post'>
                 <div>
-                    <label>Product Name: </label>
+                    <h3>Product Name</h3>
                     <label>{prodData.name}</label>
                     <input 
                         type='text' 
@@ -94,29 +111,27 @@ export default function MaintenanceModifyProduct() {
                     />
                     <button onClick={updateProperty}>Update</button>
                 </div>
-                <br />
                 <div>
-                    <label>Product Description: </label>
+                    <h3>Product Description</h3>
                     <label>{prodData.desc}</label>
                     <input
                         type='textarea'
                         name='desc'
                     />
                     <button onClick={updateProperty}>Update</button>
-                </div>
-                <br />
                 <div>
-                    <label>Product Price: </label>
-                    <label>{prodData.price}</label>
-                    <input 
+                    <h3>Product Category</h3>
+                    <input
                         type='text'
-                        name='price'
+                        name='category'
                     />
                     <button onClick={updateProperty}>Update</button>
                 </div>
-                <br />
+                </div>
+                <h3>Product Sizes</h3>
+                {prodSizes}
                 <div>
-                    <label>Main Image: </label>
+                    <h3>Main Image</h3>
                     <img src={mainImgString} alt='' />
                     <input 
                         type='file'
@@ -125,9 +140,8 @@ export default function MaintenanceModifyProduct() {
                     />
                     <button onClick={updateProperty}>Update</button>
                 </div>
-                <br />
+                <h3>Accesory Images</h3>
                 {accImages}
-                {/*<button onClick={(e) => updateProd(e)}>Submit Changes</button>*/}
                 <button onClick={(e) => deleteProd(e)}>Delete Product</button>
             </form>
         )
@@ -139,13 +153,14 @@ export default function MaintenanceModifyProduct() {
         const inputEle = e.target.closest('div').querySelector('input')
         const inputType = inputEle.type
         const docId = e.target.closest('form').id
-        if (inputType === 'text') {
+        if (inputType === 'text' || inputType === 'number') {
             const propertyName = inputEle.name
             const propertyValue = inputEle.value
             const bodyObj = {
                 _id: docId,
                 updateKey: propertyName,
-                updateValue: propertyValue
+                updateValue: propertyValue,
+                position: inputEle.id
             }
 
             const fetchInit = {

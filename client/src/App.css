@@ -80,6 +80,10 @@ h2 {
     margin-bottom: 10px;
 }
 
+h3 {
+    margin-bottom: 0px;
+}
+
 .welcome {
     /*background-color: yellow;*/
 }

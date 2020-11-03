@@ -58,18 +58,22 @@ app.get('/api/search', async (req, res) => {
     try {
         const data = await Products.find({ name: { $regex: req.query.criteria, $options: 'i' }})
         res.send(data)
-        //res.redirect('http://localhost:3000/maintenance')
     } catch(err) {
         console.log(`Error! ${err}`)
         res.redirect('http://localhost:3000//maintenance')
     }
 })
 
-
+//Saves a new product to the MongoDb database. 
 app.post('/api/newproduct', uploadEngine, async (req, res) => {
-
     const productData = new Products()
-    console.log(req.files)
+    for (i=0; i < req.body.size.length; i++) {
+        const sizeObj = {
+            sizeName: req.body.size[i],
+            price: req.body.price[i] 
+        }
+        productData.size.push(sizeObj)
+    }
     for (i=0; i < req.files.acc.length; i++) {
         const obj = {
             data: fs.readFileSync(req.files['acc'][i].path),
@@ -77,10 +81,10 @@ app.post('/api/newproduct', uploadEngine, async (req, res) => {
         }
         productData.accImgs.push(obj)
     }
-
+    
     productData.name = req.body.name
     productData.desc = req.body.desc
-    productData.price = req.body.price
+    productData.category = req.body.category
     productData.mainImg.data = fs.readFileSync(req.files['main'][0].path)
     productData.mainImg.contentType = req.files['main'][0].mimetype
 
@@ -93,6 +97,8 @@ app.post('/api/newproduct', uploadEngine, async (req, res) => {
     }
 })
 
+
+//Deletes the selected database document matching the coresponding ID.
 app.delete('/api/delete', async (req, res) => {
     prodId = req.body.prodId
     try {
@@ -104,11 +110,20 @@ app.delete('/api/delete', async (req, res) => {
     }
 })
 
+//Updates the text portions of the products.  Determines if the data coming in will update an array element
+//in the database or just a standard object.
 app.put('/api/update/product_text', async (req, res) => {
     console.log(req.body)
     const query = { _id: req.body._id }
     const updateObj = {}
-    updateObj[req.body.updateKey] = req.body.updateValue
+    const updateKey = req.body.updateKey
+    if (updateKey === 'sizeName' || updateKey === 'price') {
+        const updateString = `size.${req.body.position}.${updateKey}`
+        updateObj[updateString] = req.body.updateValue
+        console.log(updateObj)
+    } else {
+        updateObj[updateKey] = req.body.updateValue
+    }
     try {
         const dbResponse = await Products.updateOne(query, updateObj)
         res.json({status: 'Great success'})
@@ -117,9 +132,10 @@ app.put('/api/update/product_text', async (req, res) => {
     }
 })
 
+//Updates the image portions of the products.  Determines if the data coming in will update an array element
+//in the database or just a standard object.
 app.put('/api/update/image', upload.single('image'), async (req, res) => {
     const query = { _id: req.body._id }
-    //let updateObj = {}
     let updateData = {}
     let updateContentType = {}
     console.log(req.file)
@@ -127,24 +143,11 @@ app.put('/api/update/image', upload.single('image'), async (req, res) => {
     if (req.body.name === 'main') {
         updateData = { 'mainImg.data': fs.readFileSync(req.file.path) }
         updateContentType = { 'mainImg.contentType': req.file.mimetype }
-        //updateObj = {
-        //    mainImg: {
-        //        data: fs.readFileSync(req.file.path),
-        //        contentType: req.file.mimetype
-        //    }
-        //}
     } else if (req.body.name === 'acc') {
         const dataString = `accImgs.${req.body.position}.data`
         const contentTypeString = `accImgs.${req.body.position}.contentType`
-        console.log(dataString, contentTypeString)
         updateData[dataString] = fs.readFileSync(req.file.path)
         updateContentType[contentTypeString] = req.file.mimetype
-        //updateObj = {
-        //    
-        //}
-        //updateObj.accImgs[req.file.position].data = fs.readFileSync(req.file.path)
-        //updateObj.accImgs[req.file.position].contentType = req.file.mimetype
-        //console.log(updateObj.accImgs)
     }
     try {
         const dbResponse1 = await Products.updateOne(query, updateData)
@@ -157,40 +160,3 @@ app.put('/api/update/image', upload.single('image'), async (req, res) => {
 
 const port = 5000
 app.listen(process.env.PORT || port, () => console.log('Server Running'))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*const data = [
-    {key: 1, name: 'Cute Geometric Flower Vase', price: 11.99, desc: 'This is a short description of the flower vase. This vase is the best. No other vase can compete. It is super duper, and no other vase is like it. Plants love this vase. Just look at this succulant. It loves the vase!', img: 'geometric_vase'},
-    {key: 2, name: 'Personalized Pressure Cooker Steam Cover', price: 9.99, desc: '', img: 'ppcooker_cover'},
-    {key: 3, name: '3D Topographical Map of the World', price: 49.99, desc: '', img: 'topographical_map'},
-    {key: 4, name: 'Personalized 3D Printed Picture (LithoPhane)', price: 7.99, desc: '', img: 'lithophane'},
-    {key: 5, name: 'Personalized Picture Frame', price: 3.99, desc: '', img: 'lithophane_frame'},
-    {key: 6, name: 'Personalized Book/Page Holder', price: 5.99, desc: '', img: 'page holder'},
-    {key: 7, name: 'Four Personalized Coasters with Holder', price: 24.99, desc: '', img: 'coaster'},
-    {key: 8, name: 'Personalized Bag/Purse Hook', price: 4.99, desc: '', img: 'hook'},
-    {key: 9, name: 'Spaghetti Serving Measurement Utensil', price: 7.00, desc: '', img: 'sphaghetti_tool'},
-    {key: 10, name: 'Travel Friendly/Portable Necklace Display', price: 6.00, desc: '', img: 'necklace_display'},
-    {key: 11, name: 'Custom Kitchen/Office Organizer', price: 10.00, desc: '', img: 'organizer'},
-    {key: 12, name: 'Custom 3D Printing Service', price: 35.00, desc: '', img: 'custom'}
-]*/
