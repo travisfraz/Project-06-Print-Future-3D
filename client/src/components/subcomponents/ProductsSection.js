@@ -3,7 +3,7 @@ import React from 'react'
 function ProductsSection() {
     return (
         <div className="products">
-            <a className="img-container" href="products.html">
+            <a className="img-container">
                 <img src={require("../../images/lithophane_frame.jpg")} alt='' />
                 <div className="pic-text">Lithophanes</div>
             </a>
