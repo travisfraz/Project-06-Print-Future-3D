@@ -76,7 +76,7 @@ export default function MaintenanceModifyProduct() {
                     </div>
                     <div>
                         <label>Price: {ele.price}</label>
-                        <input type='number' name='price' id={index}></input>
+                        <input type='number' name='price' id={index} step='0.01'></input>
                         <button onClick={updateProperty}>Update</button>
                     </div>
                 </div>

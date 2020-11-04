@@ -1,6 +1,6 @@
 import React from 'react'
-import MaintenanceAddProduct from './subcomponents/MaintenanceAddProduct'
-import MaintenanceModifyProduct from './subcomponents/MaintenanceModifyProduct'
+import MaintenanceAddProduct from './maintenance_sub/MaintenanceAddProduct'
+import MaintenanceModifyProduct from './maintenance_sub/MaintenanceModifyProduct'
 
 export default function Maintenance() {
 

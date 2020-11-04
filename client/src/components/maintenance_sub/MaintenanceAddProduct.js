@@ -32,6 +32,7 @@ export default function Maintenance_AddProduct() {
                     type="number"
                     name='price'
                     placeholder='Price'
+                    step='0.01'
                 />
             </div>
         setAddSizeCat(prevState => prevState.concat(jsx))
@@ -76,6 +77,7 @@ export default function Maintenance_AddProduct() {
                             type="number"
                             name='price'
                             placeholder='Price'
+                            step='0.01'
                         />
                         {addSizeCat}
                         <button type='button' onClick={addSize}>Add Another Size?</button>

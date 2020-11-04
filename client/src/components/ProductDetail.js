@@ -1,5 +1,5 @@
 import React from 'react'
-import Footer from './subcomponents/Footer'
+import Footer from './universal_sub/Footer'
 import { arrayBufferToBase64 } from '../modules/arrayBufferToBase64'
 
 function ProductDetail(props) {
@@ -7,6 +7,14 @@ function ProductDetail(props) {
 
     const mainImageStr = arrayBufferToBase64(prodState.mainImg)
     const mainImg = <img src={mainImageStr} alt='' />
+
+    const options = prodState.size.map(ele => {
+        return(
+            <div>
+                <label>{ele.sizeName}: ${ele.price}</label>
+            </div>
+        )
+    })
 
     const accessoryImages = prodState.accImgs.map(element => {
         const imageStrAcc = arrayBufferToBase64(element)
@@ -26,10 +34,14 @@ function ProductDetail(props) {
                 {prodState.desc}
             </article>
             <br/>
-            <div className="p-info">Price: ${prodState.price}</div>
+            <div className="p-info">
+                <h3>Options</h3>
+                {options}
+            </div>
             <div className='pd-img-container'>
                 {accessoryImages}
             </div>
+            <a href='https://www.etsy.com/shop/PrintFuture3D'>How to buy</a>
             <Footer />
 
 

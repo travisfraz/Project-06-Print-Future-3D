@@ -1,9 +1,9 @@
 import React from 'react'
 
-import Body from './subcomponents/Body'
-import ProductsSection from './subcomponents/ProductsSection'
-import Footer from './subcomponents/Footer'
-import Banner from './subcomponents/Banner'
+import Body from './home_sub/Body'
+import ProductsSection from './home_sub/ProductsSection'
+import Footer from './universal_sub/Footer'
+import Banner from './home_sub/Banner'
 
 const Home = () => {
     return (

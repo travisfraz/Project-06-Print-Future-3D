@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Footer from './subcomponents/Footer'
+import Footer from './universal_sub/Footer'
 import { NavLink } from 'react-router-dom'
 import { arrayBufferToBase64 } from '../modules/arrayBufferToBase64'
 
@@ -46,7 +46,6 @@ const Products = () => {
                         alt=""
                     />
                     <div>{item.name}</div>
-                    <div>${item.price}</div>
                 </div>
             </NavLink>
         )
