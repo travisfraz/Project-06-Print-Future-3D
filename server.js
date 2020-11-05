@@ -44,12 +44,23 @@ const uploadEngine = upload.fields([
 
 
 
-app.get('/api/load', async (req, res) =>{
+app.get('/api/products', async (req, res) =>{
     try {
-        const data = await Products.find({})
+        const data = await Products.find({}, 'name mainImg')
         res.json(data)
     } catch(err) {
         console.log(err)
+    }
+})
+
+app.get('/api/productdetail', async (req, res) => {
+    const query = { _id: req.query._id }
+    try {
+        const data = await Products.find(query)
+        console.log(data)
+        res.json(data)
+    } catch(err) {
+        console.log(`Error! ${err}`)
     }
 })
 

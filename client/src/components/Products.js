@@ -15,7 +15,7 @@ const Products = () => {
 
     async function fetchData() {
         try {
-            const response = await fetch('/api/load', {mode: 'cors'})
+            const response = await fetch('/api/products', {mode: 'cors'})
             const responseFormatted = await response.json()
             setData(responseFormatted)
         } catch(err) {
@@ -37,7 +37,6 @@ const Products = () => {
                 key={item._id} 
                 to={{
                     pathname: `/products/${item._id}`,
-                    state: item
                 }}
             >
                 <div className="img-container">
