@@ -9,6 +9,7 @@ import Products from './components/Products'
 import ProductDetail from './components/ProductDetail'
 import Header from './components/universal_sub/Header'
 import Maintenance from './components/Maintenance'
+import ProductCategory from './components/ProductCategory';
 //import Navigation from './components/Navigation'
 //import Body from './components/subcomponents/Body'
 //import Products from './components/subcomponents/Products-section'
@@ -25,6 +26,7 @@ function App() {
             <Route path='/about' component={About}/>
             <Route path='/products' component={Products} exact/>
             <Route path='/products/:id' component={ProductDetail}/>
+            <Route path='/productcategory/:category' component={ProductCategory}/>
             <Route path='/maintenance' component={Maintenance}/>
             <Route component={Error}/>
           </Switch>

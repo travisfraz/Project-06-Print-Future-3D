@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { arrayBufferToBase64 } from '../../modules/arrayBufferToBase64'
+import { NavLink } from 'react-router-dom'
 
-function ProductsSection() {
+export default function ProductsSection() {
 
     const [data, setData] = useState([])
 
@@ -31,11 +32,16 @@ function ProductsSection() {
                 if (!categories.includes(ele.category)) {
                     categories.push(ele.category)
                     const tileImgSource = arrayBufferToBase64(ele.mainImg)
-                    let tile = <div key={ele._id} className='img-container'><img src={tileImgSource} alt=''/><div className='pic-text'>{ele.category}</div></div>
+                    let tile = 
+                        <NavLink to={{ pathname: `/productcategory/${ele.category}` }} key={ele._id}>
+                            <div className='img-container'>
+                                <img src={tileImgSource} alt=''/>
+                                <div className='pic-text'>{ele.category}</div>
+                            </div>
+                        </NavLink>
                     categoryTiles.push(tile)
                 }
             })
-
             return <div>{categoryTiles}</div>
         }
     }
@@ -46,5 +52,3 @@ function ProductsSection() {
         </div>
     )
 }
-
-export default ProductsSection

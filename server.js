@@ -51,9 +51,19 @@ app.get('/api/home', async (req, res) =>{
     }
 })
 
+app.get('/api/productcategory', async (req, res) =>{
+    const query = { category: req.query.category }
+    try {
+        const data = await Products.find(query, 'name mainImg')
+        res.json(data)
+    } catch(err) {
+        console.log(err)
+    }
+})
+
 app.get('/api/products', async (req, res) =>{
     try {
-        const data = await Products.find({}, 'name mainImg')
+        const data = await Products.find({}, 'name mainImg category')
         res.json(data)
     } catch(err) {
         console.log(err)
