@@ -6,12 +6,10 @@ import { arrayBufferToBase64 } from '../modules/arrayBufferToBase64'
 const Products = () => {
 
     const [data, setData] = useState([])
-
     
     useEffect(() => {
         fetchData()
     }, [])
-
 
     async function fetchData() {
         try {

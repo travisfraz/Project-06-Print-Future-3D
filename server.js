@@ -42,7 +42,14 @@ const uploadEngine = upload.fields([
 
 
 
-
+app.get('/api/home', async (req, res) =>{
+    try {
+        const data = await Products.find({}, 'name mainImg category')
+        res.json(data)
+    } catch(err) {
+        console.log(err)
+    }
+})
 
 app.get('/api/products', async (req, res) =>{
     try {
