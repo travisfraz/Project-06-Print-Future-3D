@@ -1,4 +1,9 @@
 /*All content CSS*/
+#page-container {
+    position: relative;
+    min-height: 100vh;
+  }
+
 body {
     margin: 0;
     font-size: 1.4em;
@@ -13,6 +18,13 @@ footer {
     display: flex;
     justify-content: space-between;
     margin: 40px 0 0 0;
+    position: absolute;
+    bottom: 0;
+    height: 3rem;
+}
+
+.footer-name {
+    padding-top: .5em;
 }
 
 .nav-link {
@@ -27,6 +39,31 @@ footer {
     .nav-link:hover {
         background-color: rgb(180, 180, 180);
     }
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+    a:hover {
+        cursor:pointer;
+       }
+
+.product-categories {
+/*    background-color: tomato;*/
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    margin: 50px 0 0 0;
+    padding-bottom: 3rem;
+}
+
+    .product-categories img:hover {
+        opacity: 0.6;
+    }
+
+
 
 
 /*Header CSS*/
@@ -97,16 +134,18 @@ h3 {
 
 
 /*All Products view CSS*/
-.products {
-/*    background-color: tomato;*/
+.all-products {
+    /*    background-color: tomato;*/
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-evenly;
     margin: 50px 0 0 0;
+    padding-bottom: 3rem;
 }
 
-    .products img:hover {
+
+    .all-products img:hover {
         opacity: 0.6;
     }
 
@@ -165,6 +204,11 @@ hr {
     text-align: center;
     color: black;
     text-decoration: none;
+}
+
+.products-content {
+    margin: 50px 0 0 0;
+    padding-bottom: 3rem;
 }
 
 

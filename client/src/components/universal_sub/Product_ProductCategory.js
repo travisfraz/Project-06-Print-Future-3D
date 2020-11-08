@@ -41,7 +41,7 @@ export default function Product_ProductCategory(props) {
                 <section className='p-text-section'>
                     {prodNames}
                 </section>
-                <div className='products'>
+                <div className='all-products'>
                     {prodTiles}
                 </div>
             </div>

@@ -35,7 +35,7 @@ export default function ProductDetailComp(props) {
         })
 
         return (
-            <div>
+            <div className="products-content">
                 <h3 className='p-title'>{productName}</h3>
                 <hr/>
                 <div className='pd-img-container'>
@@ -48,6 +48,8 @@ export default function ProductDetailComp(props) {
                 <div className="p-info">
                     <h3>Options</h3>
                     {options}
+                    <br/>
+                    <a href='https://www.etsy.com/shop/PrintFuture3D' className='nav-link'>Order on Etsy</a>
                 </div>
                 <div className='pd-img-container'>
                     {accessoryImages}
@@ -56,34 +58,3 @@ export default function ProductDetailComp(props) {
         )
     }
 }
-
-
-//useEffect(() => {
-    //    const fetchData = async () => {
-    //        try {
-    //            const urlPathArray = window.location.pathname.split('/')
-    //            const prodId = urlPathArray[urlPathArray.length-1]
-    //            const url = new URL("http://localhost:5000/api/productdetail")
-    //            const params = { _id: prodId }
-    //            url.search = new URLSearchParams(params)
-    //            const response = await fetch(url)
-    //            const resJSON = await response.json()
-    //            setProdState(resJSON)
-    //        } catch (err) {
-    //            console.log(`Error! ${err}`)
-    //        }
-    //    }
-    //    fetchData()
-    //}, [])
-    //function fetchData() {
-    //    const urlPathArray = window.location.pathname.split('/')
-    //    const prodId = urlPathArray[urlPathArray.length-1]
-    //    const url = new URL("http://localhost:5000/api/productdetail")
-    //    const params = { _id: prodId }
-    //    url.search = new URLSearchParams(params)
-//
-    //    fetch(url)
-    //        .then(response => response.json())
-    //        .then(resJSON => setProdState(resJSON[0]))
-    //        .catch(err => console.log(`Error! ${err}`))
-    //}

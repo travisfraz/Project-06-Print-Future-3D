@@ -26,7 +26,7 @@ export default function ProductDetail() {
     }, [])
 
     return(
-        <div>
+        <div id='page-container'>
             <ProductDetailComp prodState={prodState} />
             <Footer />
         </div>

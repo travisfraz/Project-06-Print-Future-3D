@@ -3,8 +3,8 @@ import React from 'react'
 function Footer() {
     return (
         <footer>
-            <span>This is a big daddy production</span>
-            <a href='null'>Maintenance Link</a>
+            <span className='footer-name'>Print Future 3D</span>
+            <a href='https://www.etsy.com/shop/PrintFuture3D' className='nav-link'>Order on Etsy</a>
         </footer>
     )
 }

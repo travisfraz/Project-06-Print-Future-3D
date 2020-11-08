@@ -23,7 +23,7 @@ const Products = () => {
     }
 
     return(
-        <div>
+        <div id='page-container'>
             <h3 className='p-title'>Products</h3>
             <hr/>
             <Product_ProductCategory data={data} />

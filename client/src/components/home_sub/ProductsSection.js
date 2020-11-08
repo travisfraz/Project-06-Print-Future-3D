@@ -47,7 +47,7 @@ export default function ProductsSection() {
     }
 
     return (
-        <div className="products">
+        <div className="product-categories">
             <PopProducts />
         </div>
     )

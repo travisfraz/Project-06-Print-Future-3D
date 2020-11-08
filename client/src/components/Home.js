@@ -7,7 +7,7 @@ import Banner from './home_sub/Banner'
 
 const Home = () => {
     return (
-        <div>
+        <div id='page-container'>
             <Banner />
             <Body />
             <ProductsSection />
